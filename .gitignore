@@ -1,0 +1,17 @@
+#IDE Files
+.idea/
+
+# Log Files
+*.log
+
+# OS Files
+.DS_Store
+
+# Binary Files
+*.exe
+
+# Others
+*.gz
+*.pyc
+__pycache__/
+venv/
