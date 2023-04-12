@@ -5,18 +5,18 @@ TRUE: "true"
 FALSE: "false"
 NULL: "null"
 
-# whitespace left/right
 _wsl{param}: _W? param
 _wsr{param}: param _W?
 _wslr{param}: _W? param _W?
 
-#pipe likes linux shell: event|filter|count
-?start: piped_expression
-?piped_expression = simple_expression
-                    | simple_expression ("|" _wslr{function_call})+ -> pipe
-?simple_expression = _wslr{op_a} | _wslr{function_call}
 
-?function_call = op_a (_W op_a)* -> function_call
+?start: piped_expression
+?piped_expression: simple_expression
+                    | simple_expression ("|" _wslr{fncall})+ -> pipe
+?simple_expression : _wslr{op_a} | _wslr{fncall}
+
+?fncall : op_a (_W op_a)* -> fncall
+
 ?simplevalue: literal | reference | _wsr{"("} piped_expression _wsl{")"}
 
 ?reference: CNAME | AT | DOLLAR
@@ -47,13 +47,13 @@ WCOLON: WS? ":" WS?
     | op_c _wslr{"=="} op_d -> eq
     | op_c _wslr{"!="} op_d -> neq
     | op_c _wslr{"=~"} op_d -> match
-?op_d: op_h
+?op_d: op_g
     | _wsr{"!"} op_g -> not
     | _wsr{"-"} op_g -> neg
 
-?op_h: simplevalue
-    | op_h _wslr{"."} reference -> dot
-    | op_h indexing -> index
+?op_g: simplevalue
+    | op_g _wslr{"."} reference -> dot
+    | op_g indexing -> index
 
 %import common.ESCAPED_STRING
 %import common.WS

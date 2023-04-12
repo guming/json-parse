@@ -1,2 +1,0 @@
-lark=1.1.5
-typeguard=3.0.2

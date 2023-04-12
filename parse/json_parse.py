@@ -15,11 +15,11 @@ class TreeToJson(Transformer):
     false = lambda self, _: False
 
 
-json_parser = Lark.open("grammer.lark", parser='lalr', rel_to=__file__,
-                   lexer='basic',
-                   propagate_positions=False,
-                   maybe_placeholders=False,
-                   transformer=TreeToJson()
+json_parser = Lark.open("json_grammer.lark", parser='lalr', rel_to=__file__,
+                        lexer='basic',
+                        propagate_positions=False,
+                        maybe_placeholders=False,
+                        transformer=TreeToJson()
                         )
 
 parse = json_parser.parse
