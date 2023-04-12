@@ -50,7 +50,7 @@ class RuntimeValue:
     @staticmethod
     def of(value):
         """
-        Convert a Python value into a MistQL RuntimeValue
+        Convert a Python value into a RuntimeValue
         """
         if isinstance(value, RuntimeValue):
             return value
@@ -82,13 +82,13 @@ class RuntimeValue:
             return RuntimeValue(RuntimeValueType.String, value.isoformat())
         else:
             raise ValueError(
-                "Cannot convert external type to MistQL type: " + str(type(value))
+                "Cannot convert external type to internal type: " + str(type(value))
             )
 
     @staticmethod
     def wrap_function_def(definition: Callable):
         """
-        Create a new function that can be used in MistQL expressions.
+        Create a new function that can be used in expressions.
         """
         return RuntimeValue(
             RuntimeValueType.Function,
@@ -98,7 +98,7 @@ class RuntimeValue:
     @staticmethod
     def from_py_func(py_func: Callable):
         """
-        Create a new function from a Python function that can be used in MistQL
+        Create a new function from a Python function that can be used
         """
         spec = inspect.getfullargspec(py_func)
         min_arity = len(spec.args)
@@ -187,7 +187,7 @@ class RuntimeValue:
             return (a.value > b.value) - (a.value < b.value)
         else:
             raise OpenAnIssueIfYouGetThisError(
-                "Cannot compare MistQL values of type " + str(a.type))
+                "Cannot compare values of type " + str(a.type))
 
     def comparable(self) -> bool:
         """
@@ -201,32 +201,32 @@ class RuntimeValue:
 
     def __lt__(self, __o: object):
         if not isinstance(__o, RuntimeValue):
-            raise ValueError("Cannot compare MistQL value to non-MistQL value")
+            raise ValueError("Cannot compare value ")
         return RuntimeValue.of(self.compare(self, __o) < 0)
 
     def __le__(self, __o: object):
         if not isinstance(__o, RuntimeValue):
-            raise ValueError("Cannot compare MistQL value to non-MistQL value")
+            raise ValueError("Cannot compare value ")
         return RuntimeValue.of(self.compare(self, __o) <= 0)
 
     def __gt__(self, __o: object):
         if not isinstance(__o, RuntimeValue):
-            raise ValueError("Cannot compare MistQL value to non-MistQL value")
+            raise ValueError("Cannot compare value")
         return RuntimeValue.of(self.compare(self, __o) > 0)
 
     def __ge__(self, __o: object):
         if not isinstance(__o, RuntimeValue):
-            raise ValueError("Cannot compare MistQL value to non-MistQL value")
+            raise ValueError("Cannot compare value")
         return RuntimeValue.of(self.compare(self, __o) >= 0)
 
     def __eq__(self, __o: object):
         if not isinstance(__o, RuntimeValue):
-            raise ValueError("Cannot compare MistQL value to non-MistQL value")
+            raise ValueError("Cannot compare value")
         return RuntimeValue.of(RuntimeValue.eq(self, __o))
 
     def __ne__(self, __o: object):
         if not isinstance(__o, RuntimeValue):
-            raise ValueError("Cannot compare MistQL value to non-MistQL value")
+            raise ValueError("Cannot compare value")
         return RuntimeValue.of(not RuntimeValue.eq(self, __o))
 
     def __bool__(self):
@@ -239,7 +239,7 @@ class RuntimeValue:
 
     def to_python(self):
         """
-        Convert a MistQL RuntimeValue into a Python value
+        Convert a RuntimeValue into a Python value
         """
         if self.type == RuntimeValueType.Null:
             return None
@@ -255,7 +255,7 @@ class RuntimeValue:
             return {key: value.to_python() for key, value in self.value.items()}
         else:
             raise ValueError(
-                "Cannot convert MistQL value type to Python: " + str(self.type)
+                "Cannot convert runtime value type to Python: " + str(self.type)
             )
 
     def truthy(self) -> bool:
@@ -318,7 +318,7 @@ class RuntimeValue:
                 return "[regex]"
             else:
                 return "[unknown]"
-        raise ValueError("Cannot convert MistQL value to JSON: " + str(self.type))
+        raise ValueError("Cannot convert Runtime Value to JSON: " + str(self.type))
 
     def to_string(self) -> str:
         """
@@ -342,7 +342,7 @@ class RuntimeValue:
             return float(0)
         else:
             raise JsonQLTypeError(
-                "Cannot convert MistQL value to float: " + str(self.type)
+                "Cannot convert runtime value to float: " + str(self.type)
             )
 
     def __repr__(self) -> str:
