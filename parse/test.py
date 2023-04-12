@@ -6,7 +6,7 @@ with open('./data/testdata.json', 'r') as tsfile:
     data = json.load(tsfile)
 
 print(data)
-query = 'data | groupby describe | keys'
+query = 'events | filter type == "send_message" '
 print('result:', parse.query(query, data))
 
 tsfile.close()

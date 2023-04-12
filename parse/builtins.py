@@ -40,6 +40,9 @@ def builtin(name: str, min_args: int, max_args: Union[None, int] = None):
 def eq(arguments: Args, stack: Stack, exec: Exec) -> RuntimeValue:
     return exec(arguments[0], stack) == exec(arguments[1], stack)
 
+@builtin("==", 2)
+def eq(arguments: Args, stack: Stack, exec: Exec) -> RuntimeValue:
+    return exec(arguments[0], stack) == exec(arguments[1], stack)
 @builtin("!=", 2)
 def neq(arguments: Args, stack: Stack, exec: Exec) -> RuntimeValue:
     return exec(arguments[0], stack) != exec(arguments[1], stack)
