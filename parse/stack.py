@@ -27,6 +27,7 @@ def build_initial_stack(
 ) -> Stack:
     functions_frame: StackFrame = {}
     for key, builtin in builtins.items():
+        print(key,builtin)
         functions_frame[key] = RuntimeValue.wrap_function_def(builtin)
     for key, value in extras.items():
         if isinstance(value, RuntimeValue):

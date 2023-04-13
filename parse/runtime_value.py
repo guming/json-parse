@@ -50,7 +50,7 @@ class RuntimeValue:
     @staticmethod
     def of(value):
         """
-        Convert a Python value into a RuntimeValue
+        Convert a Python data into a RuntimeValue
         """
         if isinstance(value, RuntimeValue):
             return value
@@ -87,9 +87,6 @@ class RuntimeValue:
 
     @staticmethod
     def wrap_function_def(definition: Callable):
-        """
-        Create a new function that can be used in expressions.
-        """
         return RuntimeValue(
             RuntimeValueType.Function,
             definition,
@@ -346,8 +343,7 @@ class RuntimeValue:
             )
 
     def __repr__(self) -> str:
-        # return "<mistql>"
-        return f"<mistql {self.to_json(permissive=True)}>"
+        return f"<json {self.to_json(permissive=True)}>"
 
     def keys(self):
         if self.type == RuntimeValueType.Object:

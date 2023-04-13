@@ -13,6 +13,8 @@ class JsonQLInstance:
     def query(self, query, data):
         ast = parse(query)
         data = convert_to_runtime(data)
+        # print('ast',ast.__dict__)
+        print(data)
         result = execute_outer(ast, data, self.extras)
         return_value = convert_to_python(result)
         return return_value

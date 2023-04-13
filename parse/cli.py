@@ -11,7 +11,7 @@ from parse import query
 log = logging.getLogger(__name__)
 
 parser = argparse.ArgumentParser(
-    description="CLI for the python MistQL query language implementation"
+    description="CLI for the python json query language implementation"
 )
 
 parser.add_argument("--version", "-v", action="version", version= "0.1")

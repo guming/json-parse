@@ -36,10 +36,6 @@ def builtin(name: str, min_args: int, max_args: Union[None, int] = None):
 
     return builtin_decorator
 
-@builtin("eq",2)
-def eq(arguments: Args, stack: Stack, exec: Exec) -> RuntimeValue:
-    return exec(arguments[0], stack) == exec(arguments[1], stack)
-
 @builtin("==", 2)
 def eq(arguments: Args, stack: Stack, exec: Exec) -> RuntimeValue:
     return exec(arguments[0], stack) == exec(arguments[1], stack)

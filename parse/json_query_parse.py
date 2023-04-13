@@ -23,7 +23,7 @@ def parse(raw):
     return from_lark(parsed)
 
 def from_lark(lark_node: Union[Any,str,Tree,Token]):
-    print(lark_node)
+    # print(lark_node)
     if isinstance(lark_node,Token):
         return process_lark_token(lark_node)
     if isinstance(lark_node,Tree):
@@ -54,7 +54,7 @@ def process_lark_token(lark_node: Token) -> BaseExpression:
 
 def process_lark_tree(lark_node) -> BaseExpression:
     # print(lark_node)
-    print(lark_node.data)
+    # print(lark_node.data)
     if lark_node.data == "array":
         return ArrayExpression([from_lark(item) for item in lark_node.children])
     elif lark_node.data == "object":
